@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Anton, Bebas_Neue, Oswald, Inter } from "next/font/google";
 import "./globals.css";
 import FixedBackdrop from "@/components/FixedBackdrop";
+import JsonLd from "@/components/JsonLd";
+import { SITE } from "@/lib/site";
+import { businessGraph } from "@/lib/seo";
 
 const anton = Anton({
   variable: "--font-anton",
@@ -28,76 +31,69 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "TPC Window Tinting Shop | Premium Auto Window Tint in Wilmington, CA",
+  metadataBase: new URL(SITE.origin),
+  title: {
+    default:
+      "TPC Window Tinting Shop | Premium Auto Window Tint in Wilmington, CA",
+    template: "%s | TPC Window Tinting Shop",
+  },
   description:
     "TPC Window Tinting Shop in Wilmington, CA. Premium automotive window tinting for style, privacy, heat protection, and a cleaner look. Call (310) 872-3644 for a free quote.",
+  applicationName: SITE.name,
   keywords: [
     "window tinting Wilmington CA",
     "auto window tint",
+    "ceramic window tint Wilmington",
     "car tint Wilmington",
     "automotive glass tinting",
     "windshield tint strip",
+    "window tinting Long Beach",
+    "window tinting San Pedro",
+    "residential window tint",
+    "commercial window tint",
     "TPC Window Tinting",
   ],
+  authors: [{ name: SITE.name, url: SITE.origin }],
+  creator: "Vuelvete Digital",
+  publisher: SITE.name,
+  alternates: { canonical: "/" },
+  formatDetection: { telephone: true, address: true, email: false },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
   openGraph: {
     title: "TPC Window Tinting Shop | Premium Auto Window Tint",
     description:
-      "Premium automotive window tinting in Wilmington, CA. Style, privacy, heat protection, and a cleaner look for your vehicle.",
+      "Premium automotive, residential & commercial window tinting in Wilmington, CA. Style, privacy, heat protection, and a cleaner look.",
+    url: SITE.origin,
+    siteName: SITE.name,
+    locale: "en_US",
     type: "website",
+    images: [
+      { url: SITE.ogImage, width: 1200, height: 630, alt: SITE.name },
+    ],
   },
-};
-
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "LocalBusiness",
-      "@id": "https://www.tpcwindowtinting.com/#business",
-      name: "TPC Window Tinting Shop",
-      url: "https://www.tpcwindowtinting.com",
-      image: "https://www.tpcwindowtinting.com/brand/logo.png",
-      telephone: "+1-310-872-3644",
-      address: {
-        "@type": "PostalAddress",
-        streetAddress: "1454 N Wilmington Blvd",
-        addressLocality: "Wilmington",
-        addressRegion: "CA",
-        postalCode: "90744",
-        addressCountry: "US",
-      },
-      openingHoursSpecification: [
-        {
-          "@type": "OpeningHoursSpecification",
-          dayOfWeek: [
-            "Monday",
-            "Tuesday",
-            "Wednesday",
-            "Thursday",
-            "Friday",
-            "Saturday",
-          ],
-          opens: "09:00",
-          closes: "18:00",
-        },
-      ],
-      creator: { "@id": "https://vuelvetedigital.com/#agency" },
-    },
-    {
-      "@type": "WebSite",
-      "@id": "https://www.tpcwindowtinting.com/#website",
-      url: "https://www.tpcwindowtinting.com",
-      name: "TPC Window Tinting Shop",
-      publisher: { "@id": "https://www.tpcwindowtinting.com/#business" },
-      creator: { "@id": "https://vuelvetedigital.com/#agency" },
-    },
-    {
-      "@type": "Organization",
-      "@id": "https://vuelvetedigital.com/#agency",
-      name: "Vuelvete Digital",
-      url: "https://vuelvetedigital.com",
-      description: "Web design and digital marketing agency.",
-    },
-  ],
+  twitter: {
+    card: "summary_large_image",
+    title: "TPC Window Tinting Shop | Premium Auto Window Tint",
+    description:
+      "Premium window tinting in Wilmington, CA. Auto, residential & commercial. Call (310) 872-3644.",
+    images: [SITE.ogImage],
+  },
+  other: {
+    "geo.region": "US-CA",
+    "geo.placename": "Wilmington, California",
+    "geo.position": `${SITE.geo.latitude};${SITE.geo.longitude}`,
+    ICBM: `${SITE.geo.latitude}, ${SITE.geo.longitude}`,
+  },
 };
 
 export default function RootLayout({
@@ -111,10 +107,7 @@ export default function RootLayout({
       className={`${anton.variable} ${bebas.variable} ${oswald.variable} ${inter.variable} h-full`}
     >
       <body className="min-h-full flex flex-col bg-black text-light">
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
+        <JsonLd data={businessGraph} />
         <FixedBackdrop />
         {children}
       </body>

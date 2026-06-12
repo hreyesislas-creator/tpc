@@ -21,11 +21,41 @@ export const SITE = {
 
   website: "www.tpcwindowtinting.com",
   websiteHref: "https://www.tpcwindowtinting.com",
+
+  // Canonical origin — used for metadataBase, canonical URLs, schema @ids
+  origin: "https://www.tpcwindowtinting.com",
+
   address: {
     line1: "1454 N Wilmington Blvd",
     line2: "Wilmington, CA 90744",
     full: "1454 N Wilmington Blvd, Wilmington, CA 90744",
+    locality: "Wilmington",
+    region: "CA",
+    postalCode: "90744",
+    country: "US",
   },
+
+  // Approximate shop coordinates (Wilmington, CA) for geo metadata + LocalBusiness schema
+  geo: { latitude: 33.7901, longitude: -118.2637 },
+
+  // Typical pricing band shown to search engines (not a public price list)
+  priceRange: "$$",
+
+  // Default social-share image (1200×630 brand banner)
+  ogImage: "/brand/banner.png",
+
+  // Neighborhoods & cities the shop serves — powers areaServed + footer links
+  serviceAreas: [
+    "Wilmington",
+    "Long Beach",
+    "San Pedro",
+    "Carson",
+    "Harbor City",
+    "Torrance",
+    "Compton",
+    "Lomita",
+  ],
+
   mapsHref:
     "https://www.google.com/maps/search/?api=1&query=1454+N+Wilmington+Blvd+Wilmington+CA+90744",
 } as const;
